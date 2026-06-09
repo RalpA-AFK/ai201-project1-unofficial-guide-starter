@@ -10,7 +10,7 @@
 ## Domain
 
 <!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
-
+Skateboard best practices. This is a domain where there are many opinions and a lot of information is shared through word of mouth, forums, and videos rather than official documentation. A retrieval-augmented generation system could help synthesize this information and provide personalized advice to skateboarders of all levels.
 ---
 
 ## Documents
@@ -20,16 +20,16 @@
 
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| 1 |SkateboardGeek.com | A guide to skateboarding tricks |https://skateboardgeek.com/skateboarding-tricks/|
+| 2 |Skateboard GB — Learn to Skate Guide | Community-driven beginner guide ("run by skateboarders, for skateboarders") |https://skateboardgb.org/beginners/learn-to-skate-guide/|
+| 3 |ScopsLife — Skateboard Maintenance 101 | Step-by-step: cleaning bearings & replacing grip tape |https://scopslife.com/skateboard-maintenance-101-a-step-by-step-guide-from-bearing-cleaning-to-grip-tape-replacement/|
+| 4 |TransWorld SKATEboarding — Basics: Stance, Pushing & Stopping | Written fundamentals tutorial: stance, pushing, turning, stopping |https://www.skateboarding.com/how-to/basics-stance-pushing-stopping-step-by-step-instruction-tutorial|
+| 5 |Surfertoday — The Story of Thrasher | Skate magazine history & culture feature |https://www.surfertoday.com/skateboarding/thrasher-the-story-of-the-ultimate-skateboard-magazine|
+| 6 |Skateboard Session — Skatepark Etiquette | Unwritten rules & etiquette for skating at a park |https://skateboardsession.com/culture-and-community/skate-park-etiquette/|
+| 7 |Skate Avenue — Skateboard Size Guide | Deck width & length sizing for beginners (width/length charts) |https://skate-avenue.com/blogs/articles/skateboard-size-guide|
+| 8 |Tactics — Skateboarding Safety & Gear Guide | Protective gear and how to fall safely |https://www.tactics.com/info/skateboarding-safety-gear-guide|
+| 9 |TransWorld SKATEboarding — How to Kickflip | Step-by-step trick tutorial (kickflip) |https://www.skateboarding.com/how-to/kickflip-like-a-pro-step-by-step-instruction-tutorial|
+| 10 |Retrospec — How to Skateboard: 5 Steps for Beginners | Practical beginner tips, disciplines & common mistakes |https://retrospec.com/blogs/gear-guides/how-to-skateboard-5-steps-for-beginners|
 
 ---
 
@@ -40,11 +40,11 @@
      numbers fit the structure of your documents.
      A review-heavy corpus warrants different chunking than a long FAQ. -->
 
-**Chunk size:**
+**Chunk size:** 500 characters
 
-**Overlap:**
+**Overlap:** 75 characters
 
-**Reasoning:**
+**Reasoning:** My documents are long-form instructional how-to guides (e.g., step-by-step trick tutorials, buying guides, and safety guides ranging from ~2,500 to 3,000 words), not short reviews or single comments. In this kind of text a single idea — one trick step, one safety rule — usually spans two to three sentences, which i understand to be roughly 300-500 characters. A 500-character chunk is large enough to hold a complete step or instruction rather than a fragment, but still small enough to keep retrieval matches tight and specific to one topic. I chose 75 characters of overlap (about one sentence) because the biggest risk with the chunking size i chose is a key instruction being split across a chunk boundary — the overlap means a sentence that straddles two chunks still appears whole in at least one of them, so retrieval won't return half an instruction. I deliberately avoided very small chunks (e.g., 200 chars), which would fragment single instructions and flood the top-k results with near-duplicate pieces of the same paragraph.
 
 ---
 
@@ -56,11 +56,11 @@
      would you weigh in choosing a different embedding model — context length, multilingual
      support, accuracy on domain-specific text, latency? -->
 
-**Embedding model:**
+**Embedding model:** all-MiniLM-L6-v2 - turns text into meaning vectors so you can search by meaning 
 
-**Top-k:**
+**Top-k:** k = 6 closest chunks to be retrieved for each query
 
-**Production tradeoff reflection:**
+**Production tradeoff reflection:** If I were deploying this for real users and cost wasn't a constraint, I might consider using a more powerful embedding model like OpenAI's text-embedding-3-small or a domain-specific model fine-tuned on skateboarding text, if available. The tradeoff would be between the improved accuracy and relevance of retrieval results (especially for nuanced skateboarding terminology and instructions) versus the increased latency and cost of generating embeddings with a larger model. Given that my domain is fairly niche and may contain specific terminology, a more accurate embedding model could significantly enhance the user experience by returning more relevant chunks, even if it means slightly slower response times.
 
 ---
 
@@ -73,11 +73,11 @@
 
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
+| 1 | What basic skills should a beginner master before trying tricks? | Stance (regular vs. goofy), pushing, turning, and stopping by foot braking — the fundamentals to learn before attempting the ollie or any trick. |
+| 2 | What trick should a beginner learn first, and why? | The ollie — it is the foundational trick that most other tricks (like the kickflip) are built on top of. |
+| 3 | What deck width and length should a beginner look for, and why? | An 8.0"-8.25" wide deck is the key beginner choice (more surface area = stability and control); deck length is largely standardized at roughly 31"-32" within an industry range of about 28"-33", so width is the real decision rather than length. |
+| 4 | Where are the best skateparks near me to learn at? | (Out-of-scope / grounding test) The system should NOT name specific parks — my documents cover skatepark etiquette but contain no location or quality data, so a correctly grounded system should say it doesn't have that information. |
+| 5 | What is the most common mistake beginners make when learning, and how do you avoid it? | Rushing to advanced tricks before mastering the fundamentals (and leaning too far back instead of staying centered) — avoid it by building and committing to each basic skill before progressing. |
 
 ---
 
@@ -87,9 +87,9 @@
      Consider: noisy or inconsistent documents, missing source attribution, off-topic
      retrieval, chunks that split key information across boundaries. -->
 
-1.
+1. Noisy or inconsistent documents: Since my sources are a mix of official guides, community forums, and magazine articles, there may be conflicting advice or varying levels of detail across them. This could lead to retrieval returning chunks with contradictory information (e.g., one source recommending a certain deck width for beginners while another suggests a different size).
 
-2.
+2. Chunks that split key information across boundaries: Even with my planned chunk size and overlap, there's a risk that important instructions or tips could be split between two chunks, leading to retrieval returning incomplete information. For example, a crucial safety tip might be cut off at the end of one chunk and not fully included in the next, which could result in the system providing partial advice that lacks context.
 
 ---
 
@@ -100,6 +100,31 @@
      Label each stage with the tool or library you're using.
      You can use ASCII art, a Mermaid diagram, or embed a sketch as an image.
      You'll use this diagram as context when prompting AI tools to implement each stage. -->
+
+```mermaid
+flowchart TD
+    subgraph BUILD["BUILD TIME - index the corpus once"]
+        A["1. Document Ingestion<br/>10 web sources scraped via requests<br/>(browser User-Agent header)<br/>HTML stripped to article text w/ BeautifulSoup<br/>saved as .txt in documents/"]
+        B["2. Chunking<br/>custom chunk_text&#40;&#41;<br/>500 chars / 75 overlap"]
+        C["3a. Embedding<br/>sentence-transformers<br/>all-MiniLM-L6-v2 (local)"]
+        D[("3b. Vector Store<br/>ChromaDB<br/>~300-500 chunk vectors")]
+        A --> B --> C --> D
+    end
+
+    subgraph QUERY["QUERY TIME - per user question"]
+        Q["User question"]
+        E["Embed query<br/>same all-MiniLM-L6-v2 model"]
+        R["4. Retrieval<br/>ChromaDB similarity search<br/>top-k = 5"]
+        G["5. Generation<br/>Groq API LLM<br/>grounding system prompt +<br/>retrieved chunks as context"]
+        ANS["Grounded answer<br/>+ source attribution<br/>(refuses if not in context)"]
+        Q --> E --> R --> G --> ANS
+    end
+
+    D -. vectors searched .-> R
+```
+
+**Linear summary (fallback):**
+`documents/ (scrape + clean) -> chunk_text() 500/75 -> all-MiniLM-L6-v2 -> ChromaDB | query -> embed -> top-k=5 search -> Groq LLM + grounding prompt -> grounded answer`
 
 ---
 
