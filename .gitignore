@@ -16,5 +16,9 @@ env/
 chroma_db/
 chroma/
 
+# Raw scraped HTML (regenerable by re-running ingest.py)
+raw_html/
+.cache/
+
 # macOS
 .DS_Store

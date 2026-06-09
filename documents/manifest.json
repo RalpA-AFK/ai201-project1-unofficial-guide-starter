@@ -1,0 +1,42 @@
+{
+  "01-skateboardgeek-tricks.txt": {
+    "url": "https://skateboardgeek.com/skateboarding-tricks/",
+    "name": "SkateboardGeek \u2014 Skateboarding Tricks Guide"
+  },
+  "02-skateboardgb-learn-to-skate.txt": {
+    "url": "https://skateboardgb.org/beginners/learn-to-skate-guide/",
+    "name": "Skateboard GB \u2014 Learn to Skate Guide"
+  },
+  "03-skateboardsession-griptape.txt": {
+    "url": "https://skateboardsession.com/maintenance-repairs/skateboard-grip-tape-maintenance/",
+    "name": "Skateboard Session \u2014 Grip Tape Maintenance & Cleaning"
+  },
+  "04-surfertoday-beginners-guide.txt": {
+    "url": "https://www.surfertoday.com/skateboarding/the-beginners-guide-to-skateboarding",
+    "name": "Surfertoday \u2014 Beginner's Guide to Skateboarding"
+  },
+  "05-surfertoday-thrasher.txt": {
+    "url": "https://www.surfertoday.com/skateboarding/thrasher-the-story-of-the-ultimate-skateboard-magazine",
+    "name": "Surfertoday \u2014 The Story of Thrasher"
+  },
+  "06-skateboardsession-etiquette.txt": {
+    "url": "https://skateboardsession.com/culture-and-community/skate-park-etiquette/",
+    "name": "Skateboard Session \u2014 Skatepark Etiquette"
+  },
+  "07-skateavenue-size-guide.txt": {
+    "url": "https://skate-avenue.com/blogs/articles/skateboard-size-guide",
+    "name": "Skate Avenue \u2014 Skateboard Size Guide"
+  },
+  "08-tactics-safety.txt": {
+    "url": "https://www.tactics.com/info/skateboarding-safety-gear-guide",
+    "name": "Tactics \u2014 Skateboarding Safety & Gear Guide"
+  },
+  "09-tactics-kickflip.txt": {
+    "url": "https://www.tactics.com/info/how-to-kickflip",
+    "name": "Tactics \u2014 How to Kickflip"
+  },
+  "10-retrospec-beginner-steps.txt": {
+    "url": "https://retrospec.com/blogs/gear-guides/how-to-skateboard-5-steps-for-beginners",
+    "name": "Retrospec \u2014 How to Skateboard: 5 Steps for Beginners"
+  }
+}

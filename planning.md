@@ -22,13 +22,13 @@ Skateboard best practices. This is a domain where there are many opinions and a 
 |---|--------|-------------|-----------------|
 | 1 |SkateboardGeek.com | A guide to skateboarding tricks |https://skateboardgeek.com/skateboarding-tricks/|
 | 2 |Skateboard GB — Learn to Skate Guide | Community-driven beginner guide ("run by skateboarders, for skateboarders") |https://skateboardgb.org/beginners/learn-to-skate-guide/|
-| 3 |ScopsLife — Skateboard Maintenance 101 | Step-by-step: cleaning bearings & replacing grip tape |https://scopslife.com/skateboard-maintenance-101-a-step-by-step-guide-from-bearing-cleaning-to-grip-tape-replacement/|
-| 4 |TransWorld SKATEboarding — Basics: Stance, Pushing & Stopping | Written fundamentals tutorial: stance, pushing, turning, stopping |https://www.skateboarding.com/how-to/basics-stance-pushing-stopping-step-by-step-instruction-tutorial|
+| 3 |Skateboard Session — Grip Tape Maintenance & Cleaning | How to clean & replace grip tape (maintenance) |https://skateboardsession.com/maintenance-repairs/skateboard-grip-tape-maintenance/|
+| 4 |Surfertoday — Beginner's Guide to Skateboarding | Fundamentals: stance, pushing, turning, stopping |https://www.surfertoday.com/skateboarding/the-beginners-guide-to-skateboarding|
 | 5 |Surfertoday — The Story of Thrasher | Skate magazine history & culture feature |https://www.surfertoday.com/skateboarding/thrasher-the-story-of-the-ultimate-skateboard-magazine|
 | 6 |Skateboard Session — Skatepark Etiquette | Unwritten rules & etiquette for skating at a park |https://skateboardsession.com/culture-and-community/skate-park-etiquette/|
 | 7 |Skate Avenue — Skateboard Size Guide | Deck width & length sizing for beginners (width/length charts) |https://skate-avenue.com/blogs/articles/skateboard-size-guide|
 | 8 |Tactics — Skateboarding Safety & Gear Guide | Protective gear and how to fall safely |https://www.tactics.com/info/skateboarding-safety-gear-guide|
-| 9 |TransWorld SKATEboarding — How to Kickflip | Step-by-step trick tutorial (kickflip) |https://www.skateboarding.com/how-to/kickflip-like-a-pro-step-by-step-instruction-tutorial|
+| 9 |Tactics — How to Kickflip | Step-by-step trick tutorial (kickflip) |https://www.tactics.com/info/how-to-kickflip|
 | 10 |Retrospec — How to Skateboard: 5 Steps for Beginners | Practical beginner tips, disciplines & common mistakes |https://retrospec.com/blogs/gear-guides/how-to-skateboard-5-steps-for-beginners|
 
 ---
@@ -44,7 +44,7 @@ Skateboard best practices. This is a domain where there are many opinions and a 
 
 **Overlap:** 75 characters
 
-**Reasoning:** My documents are long-form instructional how-to guides (e.g., step-by-step trick tutorials, buying guides, and safety guides ranging from ~2,500 to 3,000 words), not short reviews or single comments. In this kind of text a single idea — one trick step, one safety rule — usually spans two to three sentences, which i understand to be roughly 300-500 characters. A 500-character chunk is large enough to hold a complete step or instruction rather than a fragment, but still small enough to keep retrieval matches tight and specific to one topic. I chose 75 characters of overlap (about one sentence) because the biggest risk with the chunking size i chose is a key instruction being split across a chunk boundary — the overlap means a sentence that straddles two chunks still appears whole in at least one of them, so retrieval won't return half an instruction. I deliberately avoided very small chunks (e.g., 200 chars), which would fragment single instructions and flood the top-k results with near-duplicate pieces of the same paragraph.
+**Reasoning:** My documents are long-form instructional how-to guides (e.g., step-by-step trick tutorials, buying guides, and safety guides ranging from ~2,500 to 3,000 words), not short reviews or single comments. In this kind of text a single idea — one trick step, one safety rule — usually spans two to three sentences, which i understand to be roughly 300-500 characters. A 500-character chunk is large enough to hold a complete step or instruction rather than a fragment, but still small enough to keep retrieval matches tight and specific to one topic. I chose 75 characters of overlap (about one sentence) because the biggest risk with the chunking size i chose is a key instruction being split across a chunk boundary — the overlap means a sentence that straddles two chunks still appears whole in at least one of them, so retrieval won't return half an instruction. I deliberately avoided very small chunks (e.g., 200 chars), which would fragment single instructions and flood the top-k results with near-duplicate pieces of the same paragraph. To keep chunks readable, the chunker snaps the chunk end and the overlap start to whitespace so words are never split mid-token (a 500-char window that would land inside a word backs up to the previous space).
 
 ---
 
@@ -77,7 +77,7 @@ Skateboard best practices. This is a domain where there are many opinions and a 
 | 2 | What trick should a beginner learn first, and why? | The ollie — it is the foundational trick that most other tricks (like the kickflip) are built on top of. |
 | 3 | What deck width and length should a beginner look for, and why? | An 8.0"-8.25" wide deck is the key beginner choice (more surface area = stability and control); deck length is largely standardized at roughly 31"-32" within an industry range of about 28"-33", so width is the real decision rather than length. |
 | 4 | Where are the best skateparks near me to learn at? | (Out-of-scope / grounding test) The system should NOT name specific parks — my documents cover skatepark etiquette but contain no location or quality data, so a correctly grounded system should say it doesn't have that information. |
-| 5 | What is the most common mistake beginners make when learning, and how do you avoid it? | Rushing to advanced tricks before mastering the fundamentals (and leaning too far back instead of staying centered) — avoid it by building and committing to each basic skill before progressing. |
+| 5 | What safety gear should a beginner wear, and why? | A helmet is essential (especially while learning), plus knee pads, elbow pads, wrist guards, and proper shoes. Protective gear reduces the risk and severity of injuries and gives beginners the confidence to progress. |
 
 ---
 
@@ -114,7 +114,7 @@ flowchart TD
     subgraph QUERY["QUERY TIME - per user question"]
         Q["User question"]
         E["Embed query<br/>same all-MiniLM-L6-v2 model"]
-        R["4. Retrieval<br/>ChromaDB similarity search<br/>top-k = 5"]
+        R["4. Retrieval<br/>ChromaDB similarity search<br/>top-k = 6"]
         G["5. Generation<br/>Groq API LLM<br/>grounding system prompt +<br/>retrieved chunks as context"]
         ANS["Grounded answer<br/>+ source attribution<br/>(refuses if not in context)"]
         Q --> E --> R --> G --> ANS
@@ -124,7 +124,7 @@ flowchart TD
 ```
 
 **Linear summary (fallback):**
-`documents/ (scrape + clean) -> chunk_text() 500/75 -> all-MiniLM-L6-v2 -> ChromaDB | query -> embed -> top-k=5 search -> Groq LLM + grounding prompt -> grounded answer`
+`documents/ (scrape + clean) -> chunk_text() 500/75 -> all-MiniLM-L6-v2 -> ChromaDB | query -> embed -> top-k=6 search -> Groq LLM + grounding prompt -> grounded answer`
 
 ---
 
@@ -140,8 +140,22 @@ flowchart TD
      "I'll give Claude my Chunking Strategy section and ask it to implement chunk_text()
      with my specified chunk size and overlap" is a plan. -->
 
+_Tool note: **Claude** is my development assistant (code completion / generating and refining the pipeline code). The **Groq API** is not a coding assistant here — it is the runtime LLM component inside the Generation stage that answers the user's questions. So Claude builds the code; Groq runs inside the finished system._
+
 **Milestone 3 — Ingestion and chunking:**
+- **AI tool:** Claude (code assistant).
+- **Input I'll give it:** my Documents table (the 10 source URLs) and my Chunking Strategy section (500 chars / 75 overlap).
+- **Expected output:** an ingestion script that scrapes each URL with `requests` using a browser `User-Agent` header, strips HTML to article text with BeautifulSoup, saves each as a `.txt` in `documents/`; plus a `chunk_text()` function that splits text into 500-character chunks with 75 characters of overlap.
+- **How I'll verify:** print the first few chunks and confirm they are ~500 chars, overlap by ~75, and don't cut mid-word/garbled; spot-check that a scraped `.txt` is clean article text (no nav menus or cookie banners) and not a 403 page.
 
 **Milestone 4 — Embedding and retrieval:**
+- **AI tool:** Claude (code assistant).
+- **Input I'll give it:** my Retrieval Approach section (all-MiniLM-L6-v2, top-k = 6) and my Architecture diagram (build-time vs. query-time split).
+- **Expected output:** code that embeds every chunk with `sentence-transformers` (`all-MiniLM-L6-v2`), stores the vectors in ChromaDB, and a query function that embeds a question with the same model and returns the top-6 most similar chunks.
+- **How I'll verify:** run my 5 evaluation questions and confirm the retrieved chunks are on-topic (e.g., the deck-size question returns the sizing chunks); check the collection holds the expected ~300-500 chunks.
 
 **Milestone 5 — Generation and interface:**
+- **AI tool:** Claude (code assistant) to write the code; **Groq API** is the runtime LLM the code calls to generate answers.
+- **Input I'll give it:** my Grounded Generation goals — the LLM must answer only from the retrieved chunks, cite its source, and refuse when the answer isn't in the context (my out-of-scope test, Q4).
+- **Expected output:** code that builds a prompt from the top-6 retrieved chunks, sends it to the Groq API with a grounding system prompt, and returns the answer with source attribution; plus a simple query interface (CLI or Gradio/Streamlit).
+- **How I'll verify:** run all 5 evaluation questions — confirm answers 1-3 and 5 match my expected answers from the documents, and that Q4 (skateparks) is correctly refused rather than hallucinated.

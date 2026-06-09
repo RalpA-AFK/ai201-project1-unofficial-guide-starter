@@ -1,0 +1,51 @@
+================================================================================
+ DEMO QUESTIONS — The Unofficial Skateboarding Guide
+================================================================================
+Run the app:  .venv\Scripts\python.exe app.py   ->   http://localhost:7860
+
+The first 16 questions return GROUNDED answers (traceable to a source).
+The last 4 are OUT-OF-SCOPE grounding tests — the system should reply
+"I don't have enough information on that." instead of inventing an answer.
+
+Tip for the video: show one grounded answer (e.g. #6) and then one refusal
+(e.g. #17) back-to-back to prove grounding works in both directions.
+
+--------------------------------------------------------------------------------
+ GROUNDED — beginner basics & riding fundamentals
+--------------------------------------------------------------------------------
+1.  What basic skills should a beginner master before trying tricks?
+2.  How do I tell if I'm regular or goofy footed?
+3.  How do you push and stop on a skateboard?
+4.  Where should a beginner practice when first learning?
+5.  What is a tic-tac and how do you do it?
+
+--------------------------------------------------------------------------------
+ GROUNDED — gear, sizing & safety
+--------------------------------------------------------------------------------
+6.  What deck width and length should a beginner look for, and why?
+7.  What size skateboard should I get for my shoe size?
+8.  What safety gear should a beginner wear, and why?
+9.  Why are wrist guards recommended for skateboarders?
+10. Should I choose a narrower or wider deck for street tricks?
+
+--------------------------------------------------------------------------------
+ GROUNDED — tricks
+--------------------------------------------------------------------------------
+11. What trick should a beginner learn first?
+12. How do you do a kickflip, step by step?
+13. Why do you need to master the ollie before learning kickflips?
+
+--------------------------------------------------------------------------------
+ GROUNDED — maintenance, etiquette & culture
+--------------------------------------------------------------------------------
+14. How do I clean my grip tape?
+15. When should I replace my grip tape instead of cleaning it?
+16. What are the basic rules of skatepark etiquette?
+
+--------------------------------------------------------------------------------
+ OUT-OF-SCOPE — should refuse ("I don't have enough information on that.")
+--------------------------------------------------------------------------------
+17. Where are the best skateparks near me to learn at?
+18. What skateboard does Tony Hawk ride?
+19. Who won the gold medal in Olympic skateboarding?
+20. Is Element or Baker a better skateboard brand?
